@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">1Project ออฟไลน์</string>
+    <string name="header_offline_badge">ข้อมูลในเครื่อง • ออฟไลน์ 100%</string>
+    <string name="nav_overview">ภาพรวม</string>
+    <string name="nav_order_entry">รับรายการ</string>
+    <string name="nav_bills">บิล</string>
+    <string name="nav_reports">รายงาน</string>
+    <string name="nav_more">เพิ่มเติม</string>
+</resources>

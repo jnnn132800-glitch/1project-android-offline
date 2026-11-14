@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!--
+      กฎข้อ 04 (Recovery/Security):
+      ห้ามคัดลอกเฉพาะไฟล์ .db ที่เปิดอยู่โดยไม่จัดการ WAL หรืออัปโหลดขึ้นคลาวด์อัตโนมัติโดยไม่ผ่านระบบสำรองข้อมูลแบบยืนยันความถูกต้อง
+    -->
+    <exclude domain="database" path="." />
+    <exclude domain="sharedpref" path="." />
+    <exclude domain="file" path="." />
+</full-backup-content>
