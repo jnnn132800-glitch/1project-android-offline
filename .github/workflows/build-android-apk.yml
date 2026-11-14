@@ -7,6 +7,9 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-debug-apk:
     name: Run JUnit Tests (Phase 01-11) & Build Native Debug APK
@@ -39,7 +42,24 @@ jobs:
       - name: 7. Assemble Native Android Debug APK (Kotlin + Jetpack Compose + Room)
         run: gradle assembleDebug --stacktrace
 
-      - name: 8. Upload Compiled Native Debug APK Artifact
+      - name: 8. Copy APK to Friendly Filename
+        run: cp app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/1Project-Offline-Debug.apk
+
+      - name: 9. Publish Direct APK Download Link to GitHub Releases (No Unzip Needed on Phone)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0-debug
+          name: "1Project Android Offline — Native APK (กดดาวน์โหลดไฟล์ .apk ด้านล่างได้ทันที)"
+          body: |
+            ### ดาวน์โหลดไฟล์ติดตั้งสำหรับมือถือ Android (ไม่ต้องแตกไฟล์ .zip)
+            แตะที่ไฟล์ **`1Project-Offline-Debug.apk`** หรือ **`app-debug.apk`** ด้านล่างสุด (ในหัวข้อ **Assets**) เพื่อดาวน์โหลดและติดตั้งลงมือถือได้ทันที
+          files: |
+            app/build/outputs/apk/debug/1Project-Offline-Debug.apk
+            app/build/outputs/apk/debug/app-debug.apk
+          prerelease: false
+          make_latest: true
+
+      - name: 10. Upload Compiled Native Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: 1Project-Android-Offline-Debug-APK
@@ -47,7 +67,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: 9. Upload JUnit Test Reports
+      - name: 11. Upload JUnit Test Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
